@@ -1,0 +1,12 @@
+# Logs
+logs/
+*.log
+
+# Python/Environment
+.venv/
+__pycache__/
+.pytest_cache/
+
+# Docker/K8s
+.env
+.DS_Store
