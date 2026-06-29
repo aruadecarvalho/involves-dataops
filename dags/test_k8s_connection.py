@@ -3,10 +3,11 @@ from datetime import datetime
 import requests
 from airflow import DAG
 from airflow.providers.standard.operators.python import PythonOperator
+from airflow.sdk import Variable
 
 
 def check_app_connection():
-    url = "http://host.docker.internal:8000"
+    url = Variable.get("APP_BASE_URL")
     response = requests.get(url)
     response.raise_for_status()
 
