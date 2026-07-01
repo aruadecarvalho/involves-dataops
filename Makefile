@@ -1,23 +1,44 @@
-export APP_IMAGE_NAME ?= involves-fastapi:latest
-export APP_CONTAINER_NAME ?= involves-fastapi-service
+APP_IMAGE ?= fastapi-app:dev
 
-.PHONY: up down restart
+KIND_CLUSTER ?= dataops
 
-up:
+.PHONY: demo-up demo-down af-up af-down restart-af app-build \
+		kind-up k8s-deploy k8s-up port-forward k8s-down \
+		app-pipeline lint fmt
+
+demo-up: af-up k8s-up
+
+demo-down: af-down k8s-down
+
+af-up:
 	docker compose up -d
-	docker build -t $(APP_IMAGE_NAME) app
-	docker run --rm -d -p 8000:8000 --name $(APP_CONTAINER_NAME) $(APP_IMAGE_NAME)
 
-down:
+af-down:
 	docker compose down
-	-docker stop $(APP_CONTAINER_NAME)
 
-restart: down up
+restart-af: af-down af-up
 
 app-build:
-	docker build -t $(IMAGE) app/
+	docker build -t $(APP_IMAGE) app/
 
-pipeline:
+kind-up:
+	kind get clusters | grep -q $(KIND_CLUSTER) || kind create cluster --name $(KIND_CLUSTER)
+
+k8s-deploy: app-build
+	kind load docker-image $(APP_IMAGE) --name $(KIND_CLUSTER)
+	kubectl apply -f k8s/
+	kubectl rollout restart deploy/fastapi-app
+	kubectl rollout status deploy/fastapi-app --timeout=120s
+
+k8s-up: kind-up k8s-deploy
+
+port-forward:
+	kubectl port-forward svc/fastapi-app 8000:80
+
+k8s-down:
+	kind delete cluster --name $(KIND_CLUSTER)
+
+app-pipeline:
 	cd app && uv run python -m pipeline
 
 lint:
