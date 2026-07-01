@@ -6,6 +6,8 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "fastapi[standard]>=0.138.1",
+    "pandas>=2.2.0,<3.0.0",
+    "pyarrow>=15.0.0",
 ]
 default-groups = []
 

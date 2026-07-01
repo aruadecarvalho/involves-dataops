@@ -13,3 +13,15 @@ down:
 	-docker stop $(APP_CONTAINER_NAME)
 
 restart: down up
+
+app-build:
+	docker build -t $(IMAGE) app/
+
+pipeline:
+	cd app && uv run python -m pipeline
+
+lint:
+	uvx ruff check app dags
+
+fmt:
+	uvx ruff format app dags

@@ -1,0 +1,98 @@
+[
+  {
+    "order_id": 1001,
+    "region": "North",
+    "product": "Widget",
+    "quantity": 4,
+    "unit_price": 9.99,
+    "order_date": "2026-01-03"
+  },
+  {
+    "order_id": 1002,
+    "region": "South",
+    "product": "Gadget",
+    "quantity": 2,
+    "unit_price": 19.5,
+    "order_date": "2026-01-05"
+  },
+  {
+    "order_id": 1003,
+    "region": "North",
+    "product": "Gizmo",
+    "quantity": 1,
+    "unit_price": 49.0,
+    "order_date": "2026-01-07"
+  },
+  {
+    "order_id": 1004,
+    "region": "East",
+    "product": "Widget",
+    "quantity": 10,
+    "unit_price": 9.99,
+    "order_date": "2026-01-09"
+  },
+  {
+    "order_id": 1005,
+    "region": "West",
+    "product": "Gadget",
+    "quantity": 5,
+    "unit_price": 19.5,
+    "order_date": "2026-01-12"
+  },
+  {
+    "order_id": 1006,
+    "region": "South",
+    "product": "Gizmo",
+    "quantity": 3,
+    "unit_price": 49.0,
+    "order_date": "2026-01-15"
+  },
+  {
+    "order_id": 1007,
+    "region": "North",
+    "product": "Gadget",
+    "quantity": 7,
+    "unit_price": 19.5,
+    "order_date": "2026-01-18"
+  },
+  {
+    "order_id": 1008,
+    "region": "East",
+    "product": "Gizmo",
+    "quantity": 2,
+    "unit_price": 49.0,
+    "order_date": "2026-01-20"
+  },
+  {
+    "order_id": 1009,
+    "region": "West",
+    "product": "Widget",
+    "quantity": 6,
+    "unit_price": 9.99,
+    "order_date": "2026-01-22"
+  },
+  {
+    "order_id": 1010,
+    "region": "South",
+    "product": "Widget",
+    "quantity": 8,
+    "unit_price": 9.99,
+    "order_date": "2026-01-25"
+  },
+  {
+    "order_id": 1011,
+    "region": "North",
+    "product": "Gizmo",
+    "quantity": 1,
+    "unit_price": 49.0,
+    "order_date": "2026-01-28"
+  },
+  {
+    "order_id": 1012,
+    "region": "East",
+    "product": "Gadget",
+    "quantity": 4,
+    "unit_price": 19.5,
+    "order_date": "2026-01-30"
+  }
+]
