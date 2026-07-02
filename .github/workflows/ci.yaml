@@ -85,3 +85,34 @@ jobs:
         run: |
           curl -sSL https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz | tar -xz
           ./kubeconform -strict -summary k8s/
+
+  e2e-kind:
+    name: E2E on Kind
+    runs-on: ubuntu-latest
+    needs: [lint, test-app, test-dags]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create Kind cluster
+        uses: helm/kind-action@v1
+        with:
+          cluster_name: dataops
+      - name: Build image
+        run: docker build -t fastapi-app:dev app/
+      - name: Load image into Kind
+        run: kind load docker-image fastapi-app:dev --name dataops
+      - name: Deploy manifests and wait for rollout
+        run: |
+          kubectl apply -f k8s/
+          kubectl rollout status deploy/fastapi-app --timeout=120s
+      - name: Smoke-test the running app
+        run: |
+          kubectl port-forward svc/fastapi-app 8000:80 &
+          curl -sf --retry 30 --retry-delay 2 --retry-connrefused http://localhost:8000/health | tee /dev/stderr | grep -q '"status":"ok"'
+          curl -sf -X POST http://localhost:8000/pipeline/run | tee /dev/stderr | grep -q '"rows"'
+          curl -sf http://localhost:8000/pipeline/result | tee /dev/stderr | grep -q '"rows"'
+      - name: Diagnostics on failure
+        if: failure()
+        run: |
+          kubectl get pods -o wide
+          kubectl describe deploy/fastapi-app
+          kubectl logs -l app=fastapi-app --tail=50 || true
