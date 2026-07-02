@@ -1,0 +1,20 @@
+[project]
+name = "dags"
+version = "0.0.0"
+description = "Airflow DAGs (orchestration) — its own project, separate from the app."
+requires-python = ">=3.12"
+dependencies = [
+    "apache-airflow>=3.2.2",
+    "apache-airflow-providers-standard>=1.15.0",
+    "requests>=2.31.0",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.0.0"]
+
+[tool.uv]
+# This is an environment for running/testing DAGs, not an installable package.
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,6 +1,6 @@
 APP_IMAGE ?= fastapi-app:dev
-
 KIND_CLUSTER ?= dataops
+RUFF_VERSION         ?= ruff@0.15.20
 
 .PHONY: demo-up demo-down af-up af-down restart-af app-build \
 		kind-up k8s-deploy k8s-up port-forward k8s-down \
@@ -42,7 +42,17 @@ app-pipeline:
 	cd app && uv run python -m pipeline
 
 lint:
-	uvx ruff check app dags
+	uvx $(RUFF_VERSION) check app dags
+	uvx $(RUFF_VERSION) format --check app dags
 
 fmt:
-	uvx ruff format app dags
+	uvx $(RUFF_VERSION) format app dags
+	uvx $(RUFF_VERSION) check --fix app dags
+
+test: test-app test-dags
+
+test-app:
+	cd app && uv run --group dev pytest
+
+test-dags:
+	cd dags && uv run --group dev pytest

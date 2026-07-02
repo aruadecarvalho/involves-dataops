@@ -13,6 +13,10 @@ default-groups = []
 
 [dependency-groups]
 dev = [
-    "apache-airflow>=3.2.2",
-    "apache-airflow-providers-standard>=1.15.0",
+    "httpx2>=2.5.0",
+    "pytest>=8.0.0",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
