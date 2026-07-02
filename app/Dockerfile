@@ -15,6 +15,6 @@ COPY data ./data
 EXPOSE 8000
 
 ENV UV_NO_DEV=1
-ENV PIPELINE_OUTPUT=/data/output
+ENV PIPELINE_OUTPUT_DIR=/data/output
 
 CMD [ "uv", "run", "fastapi", "run", "main.py", "--host", "0.0.0.0","--port", "8000" ]

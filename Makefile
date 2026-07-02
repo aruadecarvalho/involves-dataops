@@ -4,7 +4,8 @@ RUFF_VERSION         ?= ruff@0.15.20
 
 .PHONY: demo-up demo-down af-up af-down restart-af app-build \
 		kind-up k8s-deploy k8s-up port-forward k8s-down \
-		app-pipeline lint fmt
+		app-pipeline lint fmt \
+		test test-app test-dags
 
 demo-up: af-up k8s-up
 
@@ -33,7 +34,7 @@ k8s-deploy: app-build
 k8s-up: kind-up k8s-deploy
 
 port-forward:
-	kubectl port-forward svc/fastapi-app 8000:80
+	kubectl port-forward --address 0.0.0.0 svc/fastapi-app 8000:80
 
 k8s-down:
 	kind delete cluster --name $(KIND_CLUSTER)

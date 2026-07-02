@@ -83,7 +83,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: kubeconform (schema-validate k8s/)
         run: |
-          curl -sSL https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz | tar -xz
+          curl -sSL https://github.com/yannh/kubeconform/releases/download/v0.8.0/kubeconform-linux-amd64.tar.gz | tar -xz
           ./kubeconform -strict -summary k8s/
 
   e2e-kind:
