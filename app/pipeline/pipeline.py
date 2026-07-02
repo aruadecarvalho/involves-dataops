@@ -52,6 +52,7 @@ def persist(df: pd.DataFrame) -> None:
 def run() -> dict:
     """Run the full pipeline; return a small summary."""
     result = transform(ingest())
+    print("test")
     persist(result)
     return {"status": "ok", "rows": int(len(result)), "output": str(OUTPUT_FILE)}
 
