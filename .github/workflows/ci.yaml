@@ -104,9 +104,13 @@ jobs:
         run: |
           kubectl apply -f k8s/
           kubectl rollout status deploy/fastapi-app --timeout=120s
+      - name: Setup Kubernetes port-forward
+        uses: vbem/k8s-port-forward@v1
+        with:
+          workload: "svc/fastapi-app"
+          mappings: "8000:80"
       - name: Smoke-test the running app
         run: |
-          kubectl port-forward svc/fastapi-app 8000:80 &
           curl -sf --retry 30 --retry-delay 2 --retry-connrefused http://localhost:8000/health | tee /dev/stderr | grep -q '"status":"ok"'
           curl -sf -X POST http://localhost:8000/pipeline/run | tee /dev/stderr | grep -q '"rows"'
           curl -sf http://localhost:8000/pipeline/result | tee /dev/stderr | grep -q '"rows"'
