@@ -11,5 +11,3 @@ __pycache__/
 # Docker/K8s
 .env
 .DS_Store
-
-NOTES.md
